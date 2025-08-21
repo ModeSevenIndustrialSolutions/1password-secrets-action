@@ -11,9 +11,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/lfreleng-actions/1password-secrets-action/internal/config"
-	"github.com/lfreleng-actions/1password-secrets-action/internal/onepassword"
-	"github.com/lfreleng-actions/1password-secrets-action/internal/validation"
+	"github.com/ModeSevenIndustrialSolutions/1password-service-action/internal/config"
+	"github.com/ModeSevenIndustrialSolutions/1password-service-action/internal/onepassword"
+	"github.com/ModeSevenIndustrialSolutions/1password-service-action/internal/validation"
 )
 
 // Action represents the main action interface

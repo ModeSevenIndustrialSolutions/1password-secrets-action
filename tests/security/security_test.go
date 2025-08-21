@@ -21,11 +21,11 @@ import (
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
 
-	"github.com/lfreleng-actions/1password-secrets-action/internal/config"
-	"github.com/lfreleng-actions/1password-secrets-action/internal/testdata"
-	"github.com/lfreleng-actions/1password-secrets-action/internal/validation"
-	"github.com/lfreleng-actions/1password-secrets-action/pkg/action"
-	"github.com/lfreleng-actions/1password-secrets-action/pkg/security"
+	"github.com/ModeSevenIndustrialSolutions/1password-service-action/internal/config"
+	"github.com/ModeSevenIndustrialSolutions/1password-service-action/internal/testdata"
+	"github.com/ModeSevenIndustrialSolutions/1password-service-action/internal/validation"
+	"github.com/ModeSevenIndustrialSolutions/1password-service-action/pkg/action"
+	"github.com/ModeSevenIndustrialSolutions/1password-service-action/pkg/security"
 )
 
 // SecurityTestSuite provides comprehensive security testing

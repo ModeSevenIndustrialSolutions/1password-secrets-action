@@ -60,6 +60,7 @@ OPTIONS:
 ENVIRONMENT VARIABLES:
     OP_SERVICE_ACCOUNT_TOKEN    1Password service account token (required)
     OP_TEST_VAULT_NAME         Test vault name (default: Test Vault)
+    TEST_CREDENTIAL            Test credential name (default: Testing)
     TEST_TIMEOUT               Test timeout duration
     PARALLEL_TESTS             Number of parallel tests
     VERBOSE                    Enable verbose output (true/false)
@@ -247,6 +248,7 @@ setup_test_environment() {
 
     # Set test environment variables
     export OP_TEST_VAULT_NAME="${OP_TEST_VAULT_NAME:-Test Vault}"
+    export TEST_CREDENTIAL="${TEST_CREDENTIAL:-Testing}"
     export CGO_ENABLED=0
 
     if [[ "$VERBOSE" == "true" ]]; then

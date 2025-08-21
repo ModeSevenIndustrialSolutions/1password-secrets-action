@@ -11,10 +11,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/lfreleng-actions/1password-secrets-action/internal/auth"
-	"github.com/lfreleng-actions/1password-secrets-action/internal/logger"
-	"github.com/lfreleng-actions/1password-secrets-action/internal/secrets"
-	"github.com/lfreleng-actions/1password-secrets-action/pkg/security"
+	"github.com/ModeSevenIndustrialSolutions/1password-service-action/internal/auth"
+	"github.com/ModeSevenIndustrialSolutions/1password-service-action/internal/logger"
+	"github.com/ModeSevenIndustrialSolutions/1password-service-action/internal/secrets"
+	"github.com/ModeSevenIndustrialSolutions/1password-service-action/pkg/security"
 )
 
 // Integration tests require real 1Password CLI and valid credentials

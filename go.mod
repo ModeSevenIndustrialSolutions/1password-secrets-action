@@ -1,4 +1,4 @@
-module github.com/lfreleng-actions/1password-secrets-action
+module github.com/ModeSevenIndustrialSolutions/1password-service-action
 
 go 1.23
 

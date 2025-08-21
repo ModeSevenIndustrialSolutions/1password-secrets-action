@@ -21,11 +21,11 @@ import (
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
 
-	"github.com/lfreleng-actions/1password-secrets-action/internal/config"
-	"github.com/lfreleng-actions/1password-secrets-action/internal/onepassword"
-	"github.com/lfreleng-actions/1password-secrets-action/internal/testdata"
-	"github.com/lfreleng-actions/1password-secrets-action/pkg/action"
-	"github.com/lfreleng-actions/1password-secrets-action/pkg/security"
+	"github.com/ModeSevenIndustrialSolutions/1password-service-action/internal/config"
+	"github.com/ModeSevenIndustrialSolutions/1password-service-action/internal/onepassword"
+	"github.com/ModeSevenIndustrialSolutions/1password-service-action/internal/testdata"
+	"github.com/ModeSevenIndustrialSolutions/1password-service-action/pkg/action"
+	"github.com/ModeSevenIndustrialSolutions/1password-service-action/pkg/security"
 )
 
 // IntegrationTestSuite provides integration testing for the 1Password action
@@ -474,8 +474,9 @@ func (s *IntegrationTestSuite) TestMemorySecurityIntegration() {
 	cfg.ReturnType = "output"
 
 	// Create secure string for token
-	secureToken := security.NewSecureString(s.serviceToken)
-	defer secureToken.Clear()
+	secureToken, err := security.NewSecureString([]byte(s.serviceToken))
+	require.NoError(s.T(), err)
+	defer secureToken.Zero()
 
 	actionRunner := action.NewRunnerWithClient(cfg, s.client)
 	result, err := actionRunner.Run(s.ctx)
