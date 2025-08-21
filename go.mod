@@ -1,4 +1,4 @@
-module github.com/ModeSevenIndustrialSolutions/1password-service-action
+module github.com/ModeSevenIndustrialSolutions/1password-secrets-action
 
 go 1.23
 

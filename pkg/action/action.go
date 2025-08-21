@@ -11,9 +11,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ModeSevenIndustrialSolutions/1password-service-action/internal/config"
-	"github.com/ModeSevenIndustrialSolutions/1password-service-action/internal/onepassword"
-	"github.com/ModeSevenIndustrialSolutions/1password-service-action/internal/validation"
+	"github.com/ModeSevenIndustrialSolutions/1password-secrets-action/internal/config"
+	"github.com/ModeSevenIndustrialSolutions/1password-secrets-action/internal/onepassword"
+	"github.com/ModeSevenIndustrialSolutions/1password-secrets-action/internal/validation"
 )
 
 // Action represents the main action interface

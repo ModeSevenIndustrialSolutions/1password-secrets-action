@@ -12,10 +12,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ModeSevenIndustrialSolutions/1password-service-action/internal/config"
-	"github.com/ModeSevenIndustrialSolutions/1password-service-action/internal/logger"
-	"github.com/ModeSevenIndustrialSolutions/1password-service-action/internal/output"
-	"github.com/ModeSevenIndustrialSolutions/1password-service-action/internal/secrets"
+	"github.com/ModeSevenIndustrialSolutions/1password-secrets-action/internal/config"
+	"github.com/ModeSevenIndustrialSolutions/1password-secrets-action/internal/logger"
+	"github.com/ModeSevenIndustrialSolutions/1password-secrets-action/internal/output"
+	"github.com/ModeSevenIndustrialSolutions/1password-secrets-action/internal/secrets"
 )
 
 // newTestLogger creates a logger writing to the given file with debug enabled.
