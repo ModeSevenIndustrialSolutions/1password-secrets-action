@@ -17,7 +17,8 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-permissions: {}
+permissions:
+  contents: read
 
 # yamllint disable rule:line-length
 
@@ -364,11 +365,14 @@ jobs:
   action-integration-tests:
     name: "Action Integration Tests"
     uses: ./.github/workflows/action-integration-tests.yaml
+    permissions:
+      contents: read
     secrets:
       OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
       OP_TEST_VAULT_NAME: ${{ secrets.OP_TEST_VAULT_NAME }}
     with:
       timeout: 25
+      debug: false
       manual_dispatch: true
 
   ### Performance Tests ###
