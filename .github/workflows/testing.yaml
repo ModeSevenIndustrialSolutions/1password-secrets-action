@@ -145,7 +145,7 @@ jobs:
 
       - name: "Upload race detection results"
         if: always()
-        uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b # v4.5.0
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: race-detection-results-${{ matrix.os }}-${{ matrix.go-version }}
           path: |
@@ -229,7 +229,7 @@ jobs:
 
       - name: "Upload main package test results"
         if: always()
-        uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b # v4.5.0
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: main-package-functional-test-results-${{ matrix.os }}
           path: |
@@ -278,7 +278,7 @@ jobs:
 
       - name: "Upload main package race detection results"
         if: always()
-        uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b # v4.5.0
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: main-package-race-detection-results-${{ matrix.os }}
           path: ./**/*race*.out
@@ -438,7 +438,7 @@ jobs:
 
       - name: "Upload performance reports"
         if: always()
-        uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b # v4.5.0
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: performance-reports
           path: |
