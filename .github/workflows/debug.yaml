@@ -1,0 +1,276 @@
+---
+# SPDX-License-Identifier: Apache-2.0
+# SPDX-FileCopyrightText: 2025 The Linux Foundation
+
+# Debug workflow to diagnose and fix module resolution issues
+name: "Debug Module Resolution"
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+
+jobs:
+  debug-environment:
+    name: "Debug Environment"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v4
+
+      - name: "Setup Go"
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
+
+      - name: "Debug GitHub Actions Environment"
+        run: |
+          echo "=== GitHub Actions Environment ==="
+          echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
+          echo "GITHUB_REPOSITORY: $GITHUB_REPOSITORY"
+          echo "GITHUB_SHA: $GITHUB_SHA"
+          echo "GITHUB_REF: $GITHUB_REF"
+          echo "PWD: $(pwd)"
+          echo "HOME: $HOME"
+          echo ""
+          echo "=== Go Environment ==="
+          go version
+          go env
+          echo ""
+          echo "=== Directory Structure ==="
+          ls -la
+          echo ""
+          echo "=== Git Info ==="
+          git remote -v || echo "No git remotes"
+          git log --oneline -5 || echo "No git history"
+
+      - name: "Run Module Resolution Test"
+        run: |
+          chmod +x scripts/test-module.sh
+          ./scripts/test-module.sh
+
+  debug-build-matrix:
+    name: "Debug Build Matrix"
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        go-version: ['1.21', '1.22', '1.23']
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v4
+
+      - name: "Setup Go ${{ matrix.go-version }}"
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ matrix.go-version }}
+
+      - name: "Quick Module Test"
+        run: |
+          echo "=== Quick Test on ${{ matrix.os }} with Go ${{ matrix.go-version }} ==="
+          go version
+          go list -m
+          go mod download
+          go list ./internal/...
+          go build -v ./cmd/op-secrets-action
+          echo "✅ Build successful on ${{ matrix.os }} with Go ${{ matrix.go-version }}"
+
+  debug-cross-compile:
+    name: "Debug Cross Compile"
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        goos: [linux, darwin]
+        goarch: [amd64, arm64]
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v4
+
+      - name: "Setup Go"
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
+
+      - name: "Cross Compile Test"
+        env:
+          GOOS: ${{ matrix.goos }}
+          GOARCH: ${{ matrix.goarch }}
+          CGO_ENABLED: 0
+        run: |
+          echo "=== Cross Compile ${{ matrix.goos }}/${{ matrix.goarch }} ==="
+          go mod download
+          go build -v -o op-secrets-action-${{ matrix.goos }}-${{ matrix.goarch }} ./cmd/op-secrets-action
+          ls -la op-secrets-action-*
+          echo "✅ Cross compile successful for ${{ matrix.goos }}/${{ matrix.goarch }}"
+
+  debug-makefile:
+    name: "Debug Makefile"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v4
+
+      - name: "Setup Go"
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
+
+      - name: "Test Makefile Targets"
+        run: |
+          echo "=== Testing Makefile ==="
+          make debug-env
+          echo ""
+          make debug-mod
+          echo ""
+          make mod-validate
+          echo ""
+          make build
+          echo ""
+          make test-binary
+
+  debug-workspace:
+    name: "Debug Workspace Issues"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v4
+
+      - name: "Setup Go"
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
+
+      - name: "Workspace Debugging"
+        run: |
+          echo "=== Workspace Debugging ==="
+          echo "Current directory: $(pwd)"
+          echo "Contents:"
+          ls -la
+          echo ""
+          echo "=== Check for workspace files ==="
+          find . -name "go.work*" -o -name "*.work" || echo "No workspace files found"
+          echo ""
+          echo "=== Module info ==="
+          go list -m
+          go list -m -f '{{.Dir}}'
+          echo ""
+          echo "=== Check module cache ==="
+          go env GOMODCACHE
+          echo ""
+          echo "=== Force clean module cache and retry ==="
+          go clean -modcache
+          go mod download
+          go mod verify
+          echo ""
+          echo "=== Final test ==="
+          go list ./...
+          go build ./cmd/op-secrets-action
+
+  debug-permissions:
+    name: "Debug Permissions"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v4
+
+      - name: "Setup Go"
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
+
+      - name: "Check Permissions"
+        run: |
+          echo "=== Permission Debugging ==="
+          echo "User: $(whoami)"
+          echo "Groups: $(groups)"
+          echo "Umask: $(umask)"
+          echo ""
+          echo "=== File Permissions ==="
+          ls -la go.mod
+          ls -la cmd/op-secrets-action/
+          ls -la internal/
+          echo ""
+          echo "=== Try with explicit permissions ==="
+          chmod 644 go.mod
+          chmod -R 755 cmd/
+          chmod -R 755 internal/
+          go build ./cmd/op-secrets-action
+
+  debug-minimal-reproduction:
+    name: "Minimal Reproduction"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v4
+
+      - name: "Setup Go"
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
+
+      - name: "Minimal Reproduction Test"
+        run: |
+          echo "=== Minimal Reproduction ==="
+          echo "Step 1: Check go.mod exists and is readable"
+          test -r go.mod && echo "✅ go.mod readable" || echo "❌ go.mod not readable"
+          
+          echo "Step 2: Initialize module"
+          go mod download 2>&1 | tee download.log || echo "Download failed"
+          
+          echo "Step 3: List module"
+          go list -m 2>&1 | tee list.log || echo "List failed"
+          
+          echo "Step 4: List all packages"
+          go list ./... 2>&1 | tee packages.log || echo "Package listing failed"
+          
+          echo "Step 5: Try building main package only"
+          go build ./cmd/op-secrets-action 2>&1 | tee build.log || echo "Build failed"
+          
+          echo "=== Log Contents ==="
+          echo "--- download.log ---"
+          cat download.log
+          echo "--- list.log ---"
+          cat list.log
+          echo "--- packages.log ---"
+          cat packages.log
+          echo "--- build.log ---"
+          cat build.log
+
+  debug-go-versions:
+    name: "Debug Go Versions"
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go-version: ['1.21', '1.22', '1.23', '1.24']
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v4
+
+      - name: "Setup Go ${{ matrix.go-version }}"
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ matrix.go-version }}
+        continue-on-error: true
+
+      - name: "Test with Go ${{ matrix.go-version }}"
+        run: |
+          echo "=== Testing with Go ${{ matrix.go-version }} ==="
+          go version
+          go mod download || echo "Download failed"
+          go list -m || echo "Module list failed"
+          go build ./cmd/op-secrets-action || echo "Build failed"
+        continue-on-error: true
+
+  debug-summary:
+    name: "Debug Summary"
+    runs-on: ubuntu-latest
+    needs: [debug-environment, debug-build-matrix, debug-cross-compile, debug-makefile, debug-workspace, debug-permissions, debug-minimal-reproduction]
+    if: always()
+    steps:
+      - name: "Summary"
+        run: |
+          echo "=== Debug Summary ==="
+          echo "All debug jobs completed. Check individual job results above."
+          echo "If module resolution is working in debug jobs but failing in main workflow,"
+          echo "the issue may be specific to the main workflow configuration."
