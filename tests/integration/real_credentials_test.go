@@ -15,9 +15,9 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/ModeSevenIndustrialSolutions/1password-secrets-action/internal/config"
-	"github.com/ModeSevenIndustrialSolutions/1password-secrets-action/pkg/action"
-	"github.com/ModeSevenIndustrialSolutions/1password-secrets-action/pkg/security"
+	"github.com/ModeSevenIndustrialSolutions/1password-service-action/internal/config"
+	"github.com/ModeSevenIndustrialSolutions/1password-service-action/pkg/action"
+	"github.com/ModeSevenIndustrialSolutions/1password-service-action/pkg/security"
 )
 
 // TestRealCredentialRetrieval tests the action with real 1Password credentials
@@ -573,7 +573,7 @@ func setupGitHubActionsEnv(t *testing.T) {
 	envVars := map[string]string{
 		"GITHUB_ACTIONS":     "true",
 		"GITHUB_WORKSPACE":   "/tmp/test-workspace",
-		"GITHUB_REPOSITORY":  "ModeSevenIndustrialSolutions/1password-secrets-action",
+		"GITHUB_REPOSITORY":  "ModeSevenIndustrialSolutions/1password-service-action",
 		"GITHUB_SHA":         "abc123",
 		"GITHUB_REF":         "refs/heads/main",
 		"GITHUB_ACTOR":       "test-actor",

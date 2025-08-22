@@ -15,8 +15,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ModeSevenIndustrialSolutions/1password-secrets-action/internal/cli"
-	"github.com/ModeSevenIndustrialSolutions/1password-secrets-action/pkg/security"
+	"github.com/ModeSevenIndustrialSolutions/1password-service-action/internal/cli"
+	"github.com/ModeSevenIndustrialSolutions/1password-service-action/pkg/security"
 )
 
 // Integration tests require a mock 1Password CLI binary

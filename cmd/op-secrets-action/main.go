@@ -16,10 +16,10 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/ModeSevenIndustrialSolutions/1password-secrets-action/internal/app"
-	"github.com/ModeSevenIndustrialSolutions/1password-secrets-action/internal/cli"
-	"github.com/ModeSevenIndustrialSolutions/1password-secrets-action/internal/config"
-	"github.com/ModeSevenIndustrialSolutions/1password-secrets-action/internal/logger"
+	"github.com/ModeSevenIndustrialSolutions/1password-service-action/internal/app"
+	"github.com/ModeSevenIndustrialSolutions/1password-service-action/internal/cli"
+	"github.com/ModeSevenIndustrialSolutions/1password-service-action/internal/config"
+	"github.com/ModeSevenIndustrialSolutions/1password-service-action/internal/logger"
 	"github.com/spf13/cobra"
 )
 
@@ -45,7 +45,7 @@ This tool supports:
 - Comprehensive input validation and error handling
 - Detailed audit logging with secret scrubbing
 
-For more information, visit: https://github.com/ModeSevenIndustrialSolutions/1password-secrets-action`,
+For more information, visit: https://github.com/ModeSevenIndustrialSolutions/1password-service-action`,
 	RunE:         runAction,
 	SilenceUsage: true, // Don't show usage/help on runtime errors
 }
