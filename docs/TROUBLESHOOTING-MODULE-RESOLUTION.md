@@ -6,8 +6,8 @@ This guide helps diagnose and fix Go module resolution issues in the 1Password S
 
 The 1Password Secrets Action is a Go module with the following key characteristics:
 
-- **Module Name**: `github.com/ModeSevenIndustrialSolutions/1password-service-action`
-- **Repository**: `https://github.com/ModeSevenIndustrialSolutions/1password-service-action`
+- **Module Name**: `github.com/ModeSevenIndustrialSolutions/1password-secrets-action`
+- **Repository**: `https://github.com/ModeSevenIndustrialSolutions/1password-secrets-action`
 - **Go Version**: 1.23
 - **Main Package**: `./cmd/op-secrets-action`
 
@@ -17,7 +17,7 @@ The 1Password Secrets Action is a Go module with the following key characteristi
 
 **Symptoms:**
 ```
-no required module provides package github.com/ModeSevenIndustrialSolutions/1password-service-action/internal/config; to add it:
+no required module provides package github.com/ModeSevenIndustrialSolutions/1password-secrets-action/internal/config; to add it:
 ```
 
 **Root Causes:**
@@ -32,7 +32,7 @@ no required module provides package github.com/ModeSevenIndustrialSolutions/1pas
 ```bash
 # Verify module name matches repository
 go list -m
-# Should output: github.com/ModeSevenIndustrialSolutions/1password-service-action
+# Should output: github.com/ModeSevenIndustrialSolutions/1password-secrets-action
 
 # Check module directory
 go list -m -f '{{.Dir}}'
@@ -56,7 +56,7 @@ go mod tidy
 
 **Symptoms:**
 ```
-package github.com/ModeSevenIndustrialSolutions/1password-service-action/internal/app is not in GOROOT
+package github.com/ModeSevenIndustrialSolutions/1password-secrets-action/internal/app is not in GOROOT
 ```
 
 **Solutions:**
@@ -232,8 +232,8 @@ go build -v ./cmd/op-secrets-action
 ### 4. Import Validation
 ```bash
 # Test specific imports
-go list github.com/ModeSevenIndustrialSolutions/1password-service-action/internal/config
-go list github.com/ModeSevenIndustrialSolutions/1password-service-action/internal/app
+go list github.com/ModeSevenIndustrialSolutions/1password-secrets-action/internal/config
+go list github.com/ModeSevenIndustrialSolutions/1password-secrets-action/internal/app
 ```
 
 ## Advanced Troubleshooting

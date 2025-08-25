@@ -10,7 +10,7 @@
 
 # Variables
 BINARY_NAME := op-secrets-action
-MODULE_NAME := github.com/ModeSevenIndustrialSolutions/1password-service-action
+MODULE_NAME := github.com/ModeSevenIndustrialSolutions/1password-secrets-action
 CMD_DIR := ./cmd/$(BINARY_NAME)
 BUILD_DIR := ./build
 COVERAGE_DIR := ./coverage

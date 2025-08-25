@@ -33,7 +33,7 @@ log_error() {
 }
 
 # Test variables
-EXPECTED_MODULE="github.com/ModeSevenIndustrialSolutions/1password-service-action"
+EXPECTED_MODULE="github.com/ModeSevenIndustrialSolutions/1password-secrets-action"
 TEST_FAILED=0
 
 echo "========================================"
@@ -172,7 +172,7 @@ echo "Testing specific imports from main.go:"
 
 # Extract imports from main.go
 if [ -f "cmd/op-secrets-action/main.go" ]; then
-    IMPORTS=$(grep -E "github\.com/ModeSevenIndustrialSolutions/1password-service-action/internal/" cmd/op-secrets-action/main.go | sed 's/.*"\(.*\)".*/\1/')
+    IMPORTS=$(grep -E "github\.com/ModeSevenIndustrialSolutions/1password-secrets-action/internal/" cmd/op-secrets-action/main.go | sed 's/.*"\(.*\)".*/\1/')
     
     for import in $IMPORTS; do
         echo "Testing import: $import"
@@ -232,11 +232,11 @@ if command -v git >/dev/null 2>&1; then
         echo "Git origin: $ORIGIN_URL"
         
         # Check if origin matches expected repository
-        if echo "$ORIGIN_URL" | grep -q "1password-service-action"; then
+        if echo "$ORIGIN_URL" | grep -q "1password-secrets-action"; then
             log_success "Git repository matches module name"
         else
             log_warning "Git repository name may not match module name"
-            echo "Expected: contains '1password-service-action'"
+            echo "Expected: contains '1password-secrets-action'"
             echo "Actual: $ORIGIN_URL"
         fi
     else
